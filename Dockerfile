@@ -17,6 +17,7 @@ COPY . /diffusion
 WORKDIR /diffusion
 RUN conda env create -f environment.yaml
 RUN conda init bash
+RUN wget -O models/ldm/text2img-large/model.ckpt https://ommer-lab.com/files/latent-diffusion/nitro/txt2img-f8-large/model.ckpt
 RUN /bin/bash -c "source /root/.bashrc"
 SHELL ["conda", "run", "-n", "ldm", "/bin/bash", "-c"]
 ENTRYPOINT [ "conda", "run", "--no-capture-output", "-n", "ldm"]
