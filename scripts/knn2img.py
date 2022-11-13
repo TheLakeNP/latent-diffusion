@@ -358,7 +358,11 @@ if __name__ == "__main__":
                     uc = None
                     if searcher is not None:
                         nn_dict = searcher(c, opt.knn)
-                        c = torch.cat([c, torch.from_numpy(nn_dict['nn_embeddings']).cuda()], dim=1)
+                        nn_embeddings = torch.from_numpy(nn_dict['nn_embeddings'])
+                        if torch.cuda.is_available():
+                            nn_embeddings = nn_embeddings.cuda()
+                        c = torch.cat([c, nn_embeddings], dim=1)
+                    
                     if opt.scale != 1.0:
                         uc = torch.zeros_like(c)
                     if isinstance(prompts, tuple):
